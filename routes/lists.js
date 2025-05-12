@@ -11,7 +11,6 @@ router.post("/", authenticateToken, async (req, res) => {
       name: req.body.name || "Новый список",
       owner: req.user._id,
       members: [{ userId: req.user._id, email: req.user.email, joinedAt: new Date() }],
-      items: [],
     });
     await list.save();
     res.json({ listId: list._id });

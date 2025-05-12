@@ -15,15 +15,12 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://shopsmart-client.vercel.app/"],
+    origin: ["http://localhost:3000", "https://shopsmart-client.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
 
-app.use(cors({
-  origin: ["http://localhost:3000", "https://your-vercel-app.vercel.app"],
-  credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 
 // Передача io в запросы
@@ -33,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/shopsmart", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
